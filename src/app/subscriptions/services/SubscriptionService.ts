@@ -1,5 +1,5 @@
 import { Subscription, ISubscription } from '../../../entities/Subscription';
-import { SubscriptionRepository, ISubscriptionRepository } from '../../../repository/SubscriptionRepository';
+import { SubscriptionRepository } from '../../../repository/SubscriptionRepository';
 import { CreateSubscriptionDto, UpdateSubscriptionDto } from '../dto';
 import { LoggerService } from '../../../services/LoggerService';
 
@@ -13,7 +13,7 @@ export interface ISubscriptionService {
 }
 
 export class SubscriptionService implements ISubscriptionService {
-  private subscriptionRepository: ISubscriptionRepository;
+  private subscriptionRepository: SubscriptionRepository;
   private logger: LoggerService;
 
   constructor() {
@@ -90,8 +90,4 @@ export class SubscriptionService implements ISubscriptionService {
     } catch (error) {
       this.logger.error(`Error fetching all subscriptions: ${error}`);
       throw error;
-    }
-  }
-}
-
 

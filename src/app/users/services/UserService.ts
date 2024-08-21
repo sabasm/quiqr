@@ -1,5 +1,5 @@
 import { User, IUser } from '../../../entities/User';
-import { UserRepository, IUserRepository } from '../../../repository/UserRepository';
+import { UserRepository } from '../../../repository/UserRepository';
 import { CreateUserDto, UpdateUserDto } from '../dto';
 import { hash } from 'bcrypt';
 
@@ -13,7 +13,7 @@ export interface IUserService {
 }
 
 export class UserService implements IUserService {
-  private userRepository: IUserRepository;
+  private userRepository: UserRepository;
 
   constructor() {
     this.userRepository = new UserRepository();
@@ -22,7 +22,7 @@ export class UserService implements IUserService {
   async createUser(createUserDto: CreateUserDto): Promise<IUser> {
     const passwordHash = await hash(createUserDto.password, 10);
     const user = new User(
-      Date.now().toString(), // temporary ID, will be replaced by DB
+      Date.now().toString(),
       createUserDto.email,
       createUserDto.name,
       createUserDto.role || 'user',
@@ -61,6 +61,4 @@ export class UserService implements IUserService {
   async getAllUsers(): Promise<IUser[]> {
     return this.userRepository.findAll();
   }
-}
-
 

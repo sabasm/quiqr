@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
+import { Subscription } from '../types';
 import { SubscriptionService } from '../services/SubscriptionService';
-import { Subscription } from '../types/Subscription';
 
 export const useSubscription = (userId: string) => {
   const [subscription, setSubscription] = useState<Subscription | null>(null);
@@ -10,7 +10,8 @@ export const useSubscription = (userId: string) => {
   useEffect(() => {
     const fetchSubscription = async () => {
       try {
-        const data = await SubscriptionService.getActiveSubscription(userId);
+        const subscriptionService = new SubscriptionService();
+        const data = await subscriptionService.getActiveSubscriptionByUserId(userId);
         setSubscription(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');

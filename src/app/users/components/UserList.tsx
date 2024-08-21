@@ -19,4 +19,6 @@ export const UserList: React.FC = () => {
       ))}
     </ul>
   );
+};
+
 

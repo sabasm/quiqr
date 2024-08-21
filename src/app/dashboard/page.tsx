@@ -1,13 +1,17 @@
-import React from 'react';
-import { DashboardSummary } from './components/DashboardSummary';
-import { Main } from '../../shared/components/Main';
+import { NextSeo } from 'next-seo';
 
 export default function DashboardPage() {
   return (
-    <Main>
-      <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
-      <DashboardSummary />
-    </Main>
+    <>
+      <NextSeo
+        title="User Dashboard"
+        description="View your account metrics and performance"
+      />
+      <main>
+        <h1>Dashboard</h1>
+        <DashboardSummary />
+      </main>
+    </>
   );
 }
 

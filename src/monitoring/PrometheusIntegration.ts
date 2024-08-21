@@ -1,11 +1,7 @@
-import { collectDefaultMetrics, register } from 'prom-client';
+import { collectDefaultMetrics, Registry } from 'prom-client';
 
 export function initPrometheus() {
-    collectDefaultMetrics();
-}
-
-export async function getMetrics() {
-    return await register.metrics();
-}
-
+  const register = new Registry();
+  collectDefaultMetrics({ register });
+  return register;
 

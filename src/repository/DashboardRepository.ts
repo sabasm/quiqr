@@ -1,12 +1,10 @@
-import { AbstractRepository } from './repository.abstract';
-import { Dashboard } from '../entities/Dashboard';
-
-export class DashboardRepository extends AbstractRepository<Dashboard> {
-  protected entity = Dashboard;
-
+export class DashboardRepository extends AbstractRepository<Dashboard> implements IDashboardRepository {
   async findByUserId(userId: string): Promise<Dashboard | null> {
-    // Implementation for finding a dashboard by user ID
-    throw new Error('Method not implemented');
+    // Implement the method
+  }
+
+  async updateMetrics(userId: string, metrics: DashboardMetrics): Promise<Dashboard | null> {
+    // Implement the method
   }
 }
 
