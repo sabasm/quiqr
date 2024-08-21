@@ -1,5 +1,5 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { LoggerService } from '../services/LoggerService';
+import LoggerService from '../services/LoggerService';
 
 interface Props {
   children: ReactNode;

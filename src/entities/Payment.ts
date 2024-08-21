@@ -1,15 +1,6 @@
 import { Entity } from './entity.abstract';
 
-export interface IPayment {
-  id: string;
-  userId: string;
-  amount: number;
-  currency: string;
-  status: 'pending' | 'completed' | 'failed';
-  createdAt: Date;
-}
-
-export class Payment extends Entity implements IPayment {
+export class Payment extends Entity {
   userId: string;
   amount: number;
   currency: string;

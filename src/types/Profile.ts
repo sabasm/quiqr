@@ -4,6 +4,8 @@ export interface Profile {
   name: string;
   bio: string;
   avatarUrl: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 

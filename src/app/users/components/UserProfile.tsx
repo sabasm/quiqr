@@ -1,18 +1,7 @@
 import React from 'react';
-import { useUserProfile } from '../hooks/useUserProfile';
-import { IUser } from '../../../entities/User';
+import { User } from '../../../entities/User';
 
-interface UserProfileProps {
-  userId: string;
-}
-
-export const UserProfile: React.FC<UserProfileProps> = ({ userId }) => {
-  const { user, loading, error } = useUserProfile(userId);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!user) return <div>User not found</div>;
-
+export const UserProfile: React.FC<{ user: User }> = ({ user }) => {
   return (
     <div>
       <h2>{user.name}</h2>

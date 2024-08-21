@@ -4,4 +4,6 @@ export * from './Media';
 export * from './Dashboard';
 export * from './User';
 export * from './Payment';
+export * from './entity.abstract';
+
 

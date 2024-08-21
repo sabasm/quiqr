@@ -1,71 +1,33 @@
-import { Payment } from '../types';
-import { PaymentRepository } from '../../../repository/PaymentRepository';
-import { CreatePaymentDto, UpdatePaymentDto } from '../dto';
-import { LoggerService } from '../../../services/LoggerService';
-import { StripeService } from './StripeService';
+import { PrismaClient } from '@prisma/client';
+import logger from '../../../services/LoggerService';
 
 export class PaymentService {
-  private paymentRepository: PaymentRepository;
-  private logger: LoggerService;
-  private stripeService: StripeService;
+  private prisma: PrismaClient;
 
   constructor() {
-    this.paymentRepository = new PaymentRepository();
-    this.logger = new LoggerService();
-    this.stripeService = new StripeService();
+    this.prisma = new PrismaClient();
   }
 
-  async createPayment(createPaymentDto: CreatePaymentDto): Promise<Payment> {
-    try {
-      const stripePaymentIntent = await this.stripeService.createPaymentIntent(
-        createPaymentDto.amount,
-        createPaymentDto.currency
-      );
-
-      const payment = await this.paymentRepository.create({
-        ...createPaymentDto,
-        id: stripePaymentIntent.id,
-        status: 'pending',
-        createdAt: new Date(),
-      });
-
-      this.logger.info(`Payment created for user: ${createPaymentDto.userId}`);
-      return payment;
-    } catch (error) {
-      this.logger.error(`Error creating payment: ${error}`);
-      throw error;
+  async createPayment(data: any) {
+    const payment = await this.prisma.payment.create({ data });
+    if (payment) {
+      logger.info('Payment created successfully');
+    } else {
+      logger.error('Failed to create payment');
     }
+    return payment;
   }
 
-  async getPaymentById(id: string): Promise<Payment | null> {
-    try {
-      return await this.paymentRepository.findById(id);
-    } catch (error) {
-      this.logger.error(`Error fetching payment: ${error}`);
-      throw error;
-    }
+  async findPaymentById(paymentId: string) {
+    return this.prisma.payment.findUnique({ where: { id: paymentId } });
   }
 
-  async updatePayment(id: string, updatePaymentDto: UpdatePaymentDto): Promise<Payment | null> {
-    try {
-      const updatedPayment = await this.paymentRepository.update(id, updatePaymentDto);
-      if (updatedPayment) {
-        this.logger.info(`Payment updated: ${id}`);
-      }
-      return updatedPayment;
-    } catch (error) {
-      this.logger.error(`Error updating payment: ${error}`);
-      throw error;
-    }
+  async updatePayment(paymentId: string, data: any) {
+    return this.prisma.payment.update({ where: { id: paymentId }, data });
   }
 
-  async getPaymentsByUserId(userId: string): Promise<Payment[]> {
-    try {
-      return await this.paymentRepository.findByUserId(userId);
-    } catch (error) {
-      this.logger.error(`Error fetching payments for user: ${error}`);
-      throw error;
-    }
+  async findPaymentsByUserId(userId: string) {
+    return this.prisma.payment.findMany({ where: { userId } });
   }
 }
 

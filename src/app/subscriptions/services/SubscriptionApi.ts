@@ -1,28 +1,12 @@
 import { ApiService } from '../../../services/ApiService';
-import { Subscription } from '../types';
-import { CreateSubscriptionDto, UpdateSubscriptionDto } from '../dto';
 
-export class SubscriptionApi {
-  private apiService: ApiService;
-
-  constructor() {
-    this.apiService = new ApiService();
+export class SubscriptionApi extends ApiService {
+  createSubscription(data: any) {
+    return this.post('/subscriptions', data);
   }
 
-  async getSubscription(userId: string): Promise<Subscription> {
-    return this.apiService.get<Subscription>(`/subscriptions/${userId}`);
-  }
-
-  async createSubscription(subscriptionData: CreateSubscriptionDto): Promise<Subscription> {
-    return this.apiService.post<Subscription>('/subscriptions', subscriptionData);
-  }
-
-  async updateSubscription(id: string, subscriptionData: UpdateSubscriptionDto): Promise<Subscription> {
-    return this.apiService.put<Subscription>(`/subscriptions/${id}`, subscriptionData);
-  }
-
-  async cancelSubscription(id: string): Promise<Subscription> {
-    return this.apiService.put<Subscription>(`/subscriptions/${id}/cancel`, {});
+  updateSubscription(id: string, data: any) {
+    return this.put(`/subscriptions/${id}`, data);
   }
 }
 

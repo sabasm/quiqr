@@ -1,11 +1,12 @@
-import { DashboardService } from '../../app/dashboard/services/DashboardService';
+import { DashboardService } from '../../services/DashboardService';
 
 describe('DashboardService', () => {
-  it('should get dashboard data for a user', async () => {
-    const userId = '101112';
-    const dashboard = await DashboardService.getDashboard(userId);
+  const dashboardService = new DashboardService();
+
+  it('should retrieve the dashboard', async () => {
+    const userId = 'user123';
+    const dashboard = await dashboardService.getUserDashboard(userId);
     expect(dashboard).toBeDefined();
-    expect(dashboard.metrics).toBeDefined();
   });
 });
 

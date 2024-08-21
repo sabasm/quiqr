@@ -5,3 +5,4 @@ export function initPrometheus() {
   collectDefaultMetrics({ register });
   return register;
 
+}

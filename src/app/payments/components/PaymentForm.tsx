@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { CreatePaymentDto } from '../dto/CreatePaymentDto';
@@ -12,10 +13,8 @@ export const PaymentForm: React.FC = () => {
   const onSubmit = async (data: CreatePaymentDto) => {
     try {
       await paymentService.createPayment(data);
-      // Handle success (e.g., show a success message, redirect, etc.)
     } catch (error) {
       console.error('Failed to create payment:', error);
-      // Handle error (e.g., show error message)
     }
   };
 
@@ -25,12 +24,12 @@ export const PaymentForm: React.FC = () => {
         label="Amount"
         type="number"
         {...register('amount', { required: 'Amount is required', min: 0 })}
-        error={errors.amount?.message}
+        errorMessage={errors.amount?.message}
       />
       <Input
         label="Currency"
         {...register('currency', { required: 'Currency is required' })}
-        error={errors.currency?.message}
+        errorMessage={errors.currency?.message}
       />
       <Button type="submit">Make Payment</Button>
     </form>

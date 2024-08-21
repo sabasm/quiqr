@@ -1,5 +1,5 @@
 import React from 'react';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { MasterProvider } from '../providers/MasterProvider';
 import { Navbar } from '../shared/components/Navbar';
 import { Footer } from '../shared/components/Footer';

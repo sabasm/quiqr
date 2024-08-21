@@ -1,4 +1,10 @@
+
 import React, { useMemo } from 'react';
+import { DashboardMetrics } from '../types/Dashboard';
+
+interface DashboardSummaryProps {
+  metrics: DashboardMetrics[];
+}
 
 export const DashboardSummary: React.FC<DashboardSummaryProps> = ({ metrics }) => {
   const totalRevenue = useMemo(() => {
@@ -9,7 +15,8 @@ export const DashboardSummary: React.FC<DashboardSummaryProps> = ({ metrics }) =
     <div>
       <h2>Dashboard Summary</h2>
       <p>Total Revenue: ${totalRevenue}</p>
-      {/* Other summary information */}
+      <p>Total Users: {metrics[0].totalUsers}</p>
+      <p>Active Subscriptions: {metrics[0].activeSubscriptions}</p>
     </div>
   );
 };

@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
-import { IUser } from '../../../entities/User';
-import { UserService, IUserService } from '../services/UserService';
+import { UserService } from '../services/UserService';
+import { User } from '../../../entities/User';
 
 export const useUserProfile = (userId: string) => {
-  const [user, setUser] = useState<IUser | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const userService: IUserService = new UserService();
+        const userService = new UserService();
         const fetchedUser = await userService.getUserById(userId);
         setUser(fetchedUser);
       } catch (err) {

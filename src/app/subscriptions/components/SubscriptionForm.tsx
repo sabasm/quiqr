@@ -1,34 +1,30 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { CreateSubscriptionDto } from '../dto/CreateSubscriptionDto';
-import { SubscriptionService } from '../services/SubscriptionService';
-import { Button } from '../../../shared/components/Button';
-import { Input } from '../../../shared/components/Input';
+import { InputProps } from '../../../types/InputProps';
 
-export const SubscriptionForm: React.FC = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<CreateSubscriptionDto>();
-  const subscriptionService = new SubscriptionService();
+interface SubscriptionFormProps {
+  onSubmit: (data: any) => void;
+  initialValues?: any;
+}
 
-  const onSubmit = async (data: CreateSubscriptionDto) => {
-    try {
-      await subscriptionService.createSubscription(data);
-      // Handle success (e.g., show a success message, redirect, etc.)
-    } catch (error) {
-      console.error('Failed to create subscription:', error);
-      // Handle error (e.g., show error message)
-    }
-  };
+const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ onSubmit, initialValues }) => {
+  const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues: initialValues });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <Input
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <InputProps
+        error={errors.plan}
+        onChange={register('plan').onChange}
+        onBlur={register('plan').onBlur}
+        ref={register('plan').ref}
+        name="plan"
         label="Plan"
-        {...register('plan', { required: 'Plan is required' })}
-        error={errors.plan?.message}
       />
-      <Button type="submit">Create Subscription</Button>
+      <button type="submit">Submit</button>
     </form>
   );
 };
+
+export default SubscriptionForm;
 
 

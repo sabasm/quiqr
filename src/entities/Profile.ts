@@ -1,24 +1,17 @@
 import { Entity } from './entity.abstract';
 
-export interface IProfile {
-  id: string;
+export class Profile extends Entity {
   userId: string;
-  bio: string;
-  avatarUrl: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export class Profile extends Entity implements IProfile {
-  userId: string;
+  name: string;
   bio: string;
   avatarUrl: string;
   createdAt: Date;
   updatedAt: Date;
 
-  constructor(id: string, userId: string, bio: string, avatarUrl: string) {
+  constructor(id: string, userId: string, name: string, bio: string, avatarUrl: string) {
     super(id);
     this.userId = userId;
+    this.name = name;
     this.bio = bio;
     this.avatarUrl = avatarUrl;
     this.createdAt = new Date();

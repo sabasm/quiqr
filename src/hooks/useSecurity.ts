@@ -1,11 +1,7 @@
-import { useContext } from 'react';
-import { SecurityContext } from '../context/SecurityContext';
+import { useSecurityContext } from '../context/SecurityContext';
 
 export const useSecurity = () => {
-  const context = useContext(SecurityContext);
-  if (!context) {
-    throw new Error('useSecurity must be used within a SecurityProvider');
-  }
+  const context = useSecurityContext();
   return context;
 };
 

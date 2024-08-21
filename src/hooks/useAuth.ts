@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Auth0Service, IAuth0Service } from '../services/Auth0Service';
+import { Auth0Service } from '../services/Auth0Service';
 
 export const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const auth0Service: IAuth0Service = new Auth0Service();
+  const auth0Service = new Auth0Service();
 
   useEffect(() => {
     const initAuth = async () => {
@@ -27,6 +27,6 @@ export const useAuth = () => {
   const logout = () => auth0Service.logout();
 
   return { isAuthenticated, user, loading, login, logout };
-};
+}
 
 

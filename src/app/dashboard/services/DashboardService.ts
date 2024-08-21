@@ -1,24 +1,33 @@
-import { LoggerService } from '../../../services/LoggerService';
+import { PrismaClient } from '@prisma/client';
+import { Dashboard } from '../types/Dashboard';
+import logger from '../../../services/LoggerService';
 
-export class DashboardService extends AbstractService implements IDashboardService {
-  constructor(
-    private dashboardRepository: IDashboardRepository,
-    private logger: LoggerService
-  ) {
-    super();
+export class DashboardService {
+  private prisma: PrismaClient;
+
+  constructor() {
+    this.prisma = new PrismaClient();
   }
 
-  async getUserDashboard(userId: string): Promise<Dashboard> {
-    try {
-      const dashboard = await this.dashboardRepository.findByUserId(userId);
-      if (!dashboard) {
-        throw new Error('Dashboard not found');
-      }
-      return dashboard;
-    } catch (error) {
-      this.logger.error('Error fetching user dashboard', { userId, error });
-      throw error;
+  async getDashboard(userId: string): Promise<Dashboard | null> {
+    const dashboard = await this.prisma.dashboard.findUnique({
+      where: { userId },
+    });
+    if (!dashboard) {
+      logger.error(`No dashboard found for user ${userId}`);
     }
+    return dashboard;
+  }
+
+  async updateMetrics(userId: string, metrics: Partial<Dashboard['metrics']>): Promise<Dashboard | null> {
+    const dashboard = await this.prisma.dashboard.update({
+      where: { userId },
+      data: { metrics },
+    });
+    if (!dashboard) {
+      logger.error(`Failed to update metrics for user ${userId}`);
+    }
+    return dashboard;
   }
 }
 

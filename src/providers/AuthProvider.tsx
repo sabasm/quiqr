@@ -1,14 +1,18 @@
 import React from 'react';
-import { AuthContext } from '../context/AuthContext';
-import { useAuth0 } from '@auth0/auth0-react';
+import { Auth0Provider } from '@auth0/auth0-react';
+import { auth0Config } from '../config/auth0';
 
 export const AuthProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
-  const auth0 = useAuth0();
-
   return (
-    <AuthContext.Provider value={auth0}>
+    <Auth0Provider
+      domain={auth0Config.domain}
+      clientId={auth0Config.clientId}
+      authorizationParams={{
+        redirect_uri: window.location.origin
+      }}
+    >
       {children}
-    </AuthContext.Provider>
+    </Auth0Provider>
   );
 };
 

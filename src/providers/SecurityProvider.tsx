@@ -1,16 +1,9 @@
-import React, { useState } from 'react';
-import { SecurityContext } from '../context/SecurityContext';
+import React from 'react';
+import { useSecurityContext } from '../context/SecurityContext';
 
-export const SecurityProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
-  const [isSecure, setIsSecure] = useState(false);
-
-  const toggleSecurity = () => setIsSecure(prev => !prev);
-
-  return (
-    <SecurityContext.Provider value={{ isSecure, toggleSecurity }}>
-      {children}
-    </SecurityContext.Provider>
-  );
+export const SecurityProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const context = useSecurityContext();
+  return <>{children}</>;
 };
 
 

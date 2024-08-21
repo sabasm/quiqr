@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
+import { User } from '../../../entities/User';
 import { UserService } from '../services/UserService';
-import { IUser } from '../../../entities/User';
 
 export const useFetchUsers = () => {
-  const [users, setUsers] = useState<IUser[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 

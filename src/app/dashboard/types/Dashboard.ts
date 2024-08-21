@@ -1,3 +1,4 @@
+
 export interface DashboardMetrics {
   totalUsers: number;
   activeSubscriptions: number;

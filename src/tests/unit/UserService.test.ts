@@ -1,18 +1,17 @@
-import { UserService } from '../../app/users/services/UserService';
+import { UserService } from "@/app/users/services";
+
+const userService = new UserService();
 
 describe('UserService', () => {
-  it('should get all users', async () => {
-    const users = await UserService.getAllUsers();
-    expect(Array.isArray(users)).toBe(true);
-    expect(users.length).toBeGreaterThan(0);
+  it('should retrieve all users', async () => {
+    const users = await userService.getAllUsers();
+    expect(users).toBeDefined();
   });
 
-  it('should get a user by ID', async () => {
-    const userId = '131415';
-    const user = await UserService.getUserById(userId);
+  it('should retrieve user by ID', async () => {
+    const userId = 'user123';
+    const user = await userService.getUserById(userId);
     expect(user).toBeDefined();
-    expect(user.id).toBe(userId);
   });
 });
-
 

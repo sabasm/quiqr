@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { LoggerService } from '../services/LoggerService';
+import LoggerService from '../services/LoggerService';
 
 const logger = new LoggerService();
 
@@ -11,5 +11,4 @@ export function errorMiddleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/error', req.url));
   }
 }
-
 

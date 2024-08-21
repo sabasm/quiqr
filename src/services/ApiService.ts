@@ -2,23 +2,27 @@ import axios, { AxiosInstance } from 'axios';
 import { axiosConfig } from '../config/axiosConfig';
 
 export class ApiService {
-  private api: AxiosInstance;
+  private axiosInstance: AxiosInstance;
 
   constructor() {
-    this.api = axios.create(axiosConfig);
+    this.axiosInstance = axios.create(axiosConfig);
   }
 
-  async get<T>(url: string, params = {}): Promise<T> {
-    const response = await this.api.get<T>(url, { params });
-    return response.data;
+  get<T>(endpoint: string) {
+    return this.axiosInstance.get<T>(endpoint);
   }
 
-  async post<T>(url: string, data = {}): Promise<T> {
-    const response = await this.api.post<T>(url, data);
-    return response.data;
+  post<T>(endpoint: string, data: any) {
+    return this.axiosInstance.post<T>(endpoint, data);
   }
 
-  // Add more methods as needed (put, delete, etc.)
+  put<T>(endpoint: string, data: any) {
+    return this.axiosInstance.put<T>(endpoint, data);
+  }
+
+  delete<T>(endpoint: string) {
+    return this.axiosInstance.delete<T>(endpoint);
+  }
 }
 
 

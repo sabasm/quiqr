@@ -10,7 +10,8 @@ export const useDashboard = (userId: string) => {
   useEffect(() => {
     const fetchDashboard = async () => {
       try {
-        const data = await DashboardService.getDashboard(userId);
+        const dashboardService = new DashboardService();
+        const data = await dashboardService.getDashboard(userId);
         setDashboard(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');

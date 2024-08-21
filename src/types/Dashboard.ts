@@ -1,10 +1,12 @@
-export interface DashboardData {
+export interface DashboardMetrics {
+  totalUsers: number;
+  activeSubscriptions: number;
+  revenue: number;
+}
+
+export interface Dashboard {
   userId: string;
-  metrics: {
-    totalUsers: number;
-    activeSubscriptions: number;
-    revenue: number;
-  };
+  metrics: DashboardMetrics;
 }
 
 

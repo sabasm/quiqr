@@ -5,4 +5,7 @@ export * from './Dashboard';
 export * from './ApiResponse';
 export * from './Security';
 export * from './Theme';
+export * from './User';
+export * from './Payment';
+
 

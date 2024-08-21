@@ -1,12 +1,12 @@
-export class DashboardApi {
-  constructor(private apiService: ApiService) {}
+import { ApiService } from '../../../services/ApiService';
 
-  async getUserDashboard(userId: string): Promise<Dashboard> {
-    return this.apiService.get<Dashboard>(`/dashboard/${userId}`);
+export class DashboardApi extends ApiService {
+  getDashboardData() {
+    return this.get('/dashboard');
   }
 
-  async updateMetrics(userId: string, metrics: DashboardMetrics): Promise<Dashboard> {
-    return this.apiService.put<Dashboard>(`/dashboard/${userId}/metrics`, metrics);
+  updateDashboardData(data: any) {
+    return this.put('/dashboard', data);
   }
 }
 

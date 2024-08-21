@@ -1,19 +1,21 @@
 import React from 'react';
-import { ProfileSummary } from './components/ProfileSummary';
-import { ProfileForm } from './components/ProfileForm';
-import { Main } from '../../shared/components/Main';
-import { useAuth } from '../../hooks/useAuth';
+import ProfileForm from './components/ProfileForm';
+import ProfileSummary from './components/ProfileSummary';
+import { IProfile } from './types/IProfile';
 
-export default function ProfilesPage() {
-  const { user } = useAuth();
+const ProfilePage: React.FC<{ profile: IProfile }> = ({ profile }) => {
+  const handleFormSubmit = (data: any) => {
+    console.log('Profile updated', data);
+  };
 
   return (
-    <Main>
-      <h1 className="text-3xl font-bold mb-4">User Profile</h1>
-      <ProfileSummary userId={user?.id || ''} />
-      <ProfileForm userId={user?.id || ''} />
-    </Main>
+    <div>
+      <ProfileSummary profile={profile} />
+      <ProfileForm onSubmit={handleFormSubmit} initialValues={profile} />
+    </div>
   );
-}
+};
+
+export default ProfilePage;
 
 

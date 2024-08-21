@@ -13,4 +13,5 @@ export default function UserPage({ params }: UserPageProps) {
       <UserProfile userId={params.id} />
     </Main>
   );
+}
 

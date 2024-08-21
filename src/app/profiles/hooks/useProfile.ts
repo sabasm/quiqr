@@ -1,23 +1,29 @@
 import { useState, useEffect } from 'react';
-import { IProfile } from '../../../entities/Profile';
 import { ProfileService } from '../services/ProfileService';
-import useSWR from 'swr';
+import { Profile } from '../types/Profile';
 
 export const useProfile = (userId: string) => {
-  const { data: profile, error, mutate } = useSWR<IProfile | null>(
-    userId ? `/api/profiles/${userId}` : null,
-    async () => {
-      const profileService = new ProfileService();
-      return profileService.getProfileByUserId(userId);
-    }
-  );
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  return {
-    profile,
-    loading: !error && !profile,
-    error: error ? 'Failed to fetch profile' : null,
-    mutate
-  };
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const profileService = new ProfileService();
+        const data = await profileService.getProfileByUserId(userId);
+        setProfile(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'An error occurred');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, [userId]);
+
+  return { profile, loading, error };
 };
 
 
